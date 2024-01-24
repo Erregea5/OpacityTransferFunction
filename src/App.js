@@ -1,5 +1,5 @@
 import { useState } from "react";
-import InteractiveLinePlot from "./InteractiveLinePlot";
+import OpacityTransferFunction from "./OpacityTransferFunction";
 import { ChromePicker } from 'react-color'
 
 export default function App() {
@@ -33,24 +33,26 @@ export default function App() {
     }}>New Points</button>
     
     <div style={{height:'200px'}}>
-      <InteractiveLinePlot 
+      <OpacityTransferFunction 
         InitialPoints={points} 
         Gradient={palette}
         UpdateCallBack={onUpdate} 
         ShowDottedLines={true} 
         ShowCoordinates={true} 
         CoordinatesStyle={{color:'blue',fontSize:20}}
-        Bounds={{upper:{x:1,y:1},lower:{x:0,y:0}}}
+        UserData={[{x:1,y:1},{x:0,y:0}]}
         HasGradientSelector={true}
       />
     </div>
-    {/* <div style={{width:'200px', height:'200px'}}>
+    {/* <div style={{height:'200px', marginTop:'300px'}}>
       <InteractiveLinePlot 
         InitialPoints={points} 
         Gradient={palette} 
         UpdateCallBack={onUpdate} 
         ShowDottedLines={true} 
         ShowCoordinates={true}
+        Bounds={{upper:{x:20,y:1},lower:{x:-20,y:0}}}
+        HasGradientSelector={true}
       />
     </div> */}
   </>);
