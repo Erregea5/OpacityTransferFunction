@@ -222,8 +222,10 @@ function chartInit(chart,gradient,{offset,scale},onUpdate,coordinateState,showDo
       if(ev.button===2){
         activeIndex=null;
         canvas.onpointermove=null;
-        if(removePoint(chart,x,y,index+min.i))
-          onUpdate(updateArgs('removePoint',index+min.i));
+        
+        if(index+min.i!==0&&index+min.i!==chart.data.labels.length-1)
+          if(removePoint(chart,x,y,index+min.i))
+            onUpdate(updateArgs('removePoint',index+min.i));
         
         return;
       }
