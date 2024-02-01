@@ -1,70 +1,116 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Design
 
-## Available Scripts
+There is only one component which is exposed to the user. This is the Opacity transfer function. This component has many optional subcomponents, the default is that it contains only the interactive line plot.
 
-In the project directory, you can run:
+The interactivity of the line plot and gradient scatter plot is a very simple state machine that keeps track of what is the active index. Selected points on the graph are calculated by taking the screen coordinate, normalizing, then scaling.
 
-### `npm start`
+Chart.js takes care of the construction of the plots. To keep the color uniform in the gradient scatter plot, a predraw function is passed to Chart.js to draw the gradient.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The Gradient is calculated by taking simple linear interpolation between gradient and data points. When calculating the gradient, a gradient array and a canvas-context linear gradient is created.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+I use a clever hack in my components to update subcomponents by initializing a subcomponent state object in the component and passing it to the subcomponent where the output of useState is pushed into the object.
 
-### `npm test`
+# Meetings
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Meeting #1 12/9
 
-### `npm run build`
+### Tasks:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- create interactive line plot like the one on paraview
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- make add point, remove point, and move point functionality
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  
 
-### `npm run eject`
+### Notes:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- paraview component is inspiration
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Conversation with Nguyen 12/15
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Tasks:
 
-## Learn More
+- Add optional dashed line under point and coordinates above graph.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Gradient opacity should depend on height of point
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  
 
-### Code Splitting
+### Additional Work:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Added prop to specify style of coordinates
 
-### Analyzing the Bundle Size
+- Improved distance from point threshold by making it dependent on chart area
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Seperated test from component
 
-### Making a Progressive Web App
+  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Meeting #2 12/19
 
-### Advanced Configuration
+### Tasks:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- fix out of bounds bug
 
-### Deployment
+- implement gradient picker
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- implement table that is synchronized with values in chart
 
-### `npm run build` fails to minify
+- added bounds prop
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  
+
+## Meeting #3 1/4
+
+### Tasks:
+
+- write code and work documentation
+
+- fix gradient bug when line point reaches zero
+
+- new 'UserData' prop which we calculate bounds for
+
+- change updatecallback input
+
+- start with initial points at ends and make their x value static
+
+  
+
+## Meeting #4 1/25
+
+### Tasks:
+
+- hide colorpicker on user click of color point
+
+- make sync button to sync color and line points by taking union
+
+- table should not have fixed position
+
+- bug hunt
+
+- make video of component and write big picture overview of system
+
+  
+
+# References
+
+- https://stackoverflow.com/questions/63898706/how-to-paint-specific-area-of-chartjs
+
+- https://stackoverflow.com/questions/11225912/make-div-height-occupy-parent-remaining-height
+
+- https://stackoverflow.com/questions/17354163/dynamically-update-values-of-a-chartjs-chart
+
+- https://stackoverflow.com/questions/43757979/chart-js-drag-points-on-linear-chart
+
+- https://stackoverflow.com/questions/38593123/how-to-hide-y-axis-line-in-chartjs
+
+- https://stackoverflow.com/questions/21389341/disable-animation-with-charts-js
+
+- https://stackoverflow.com/questions/46335014/html-canvas-how-to-color-area-under-a-line-graph
+
+- https://www.chartjs.org/docs/latest/
+
+- https://www.npmjs.com/package/react-color
